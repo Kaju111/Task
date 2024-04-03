@@ -7,9 +7,9 @@ const Login = ({ onLogin, remainingTime }) => {
 
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const correctPassword = "123456";
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const handleLogin = () => {
     if (remainingTime <= 0) {
@@ -35,6 +35,10 @@ const Login = ({ onLogin, remainingTime }) => {
       <div className="border-[#00FFEC] border-2 h-[600px] w-[600px] rounded-full flex flex-col items-center justify-center relative">
         <div className={`circle ${isLoggingIn ? "animate-rotate-fade" : ""}`}>
           <IoFingerPrintOutline className="h-[80px] w-[80px]" />
+        </div>
+        <div className={`doors ${isLoggingIn ? "animate-slide-doors" : ""}`}>
+          <div className="door-left w-1/2 h-full bg-black"></div>
+          <div className="door-right w-1/2 h-full bg-black"></div>
         </div>
         <input
           className="border-[#00FFEC] w-[400px] border h-16 bg-black outline-none p-[10px] my-20"
