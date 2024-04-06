@@ -1,44 +1,81 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./components/Login";
-import Lab from "./components/Lab";
-import Loader from "./components/Loader";
+import React, { useState, useEffect } from "react";
+import Table from "./components/Table";
+import Pagination from "./components/Pagination";
+import { MdFileDownload } from "react-icons/md";
 
-const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(600);
+function App() {
+  const [data, setData] = useState([]);
+  const [totalEntries, setTotalEntries] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    const storedTime = localStorage.getItem("remainingTime");
-    if (storedTime) {
-      setRemainingTime(parseInt(storedTime));
-    }
-  }, []);
+    fetchData();
+  }, [currentPage, pageSize]);
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `http://fe-test.dev.rampnow.io:8000/api/books?page=${currentPage}&limit=${pageSize}`
+      );
+      const jsonData = await response.json();
+      setData(jsonData.data);
+      setTotalEntries(jsonData.count);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
-  const handleLogout = (time) => {
-    setIsLoggedIn(false);
-    setRemainingTime(time);
-    localStorage.setItem("remainingTime", time);
+  const handlePageSizeChange = (size) => {
+    setPageSize(size);
+    setCurrentPage(1); // Reset to first page when changing page size
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleDownloadCSV = () => {
+    // Convert data to CSV format
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      data.map((row) => Object.values(row).join(",")).join("\n");
+    // Create a temporary anchor element to trigger the download
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "books.csv");
+    document.body.appendChild(link);
+    // Trigger the download
+    link.click();
+    // Cleanup
+    document.body.removeChild(link);
   };
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Login onLogin={handleLogin} remainingTime={remainingTime} />
-          }
-        />
-        <Route path="/lab" element={<Lab onExit={handleLogout} />} />
-        <Route path="/lob" element={<Loader />} />
-      </Routes>
-    </BrowserRouter>
+    <div className="">
+      <h1 className="font-bold text-xl  mt-3 flex flex-col justify-center items-center">
+        Books Table
+      </h1>
+      <button
+        onClick={handleDownloadCSV}
+        className="flex flex-row items-center ml-8 border-2 border-gray-300 py-3 px-2 rounded-xl hover:bg-gray-300"
+      >
+        Download CSV
+        <h1>
+          <MdFileDownload />
+        </h1>
+      </button>
+      <Table data={data} />
+      <Pagination
+        totalEntries={totalEntries}
+        pageSize={pageSize}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+        onPageSizeChange={handlePageSizeChange}
+      />
+    </div>
   );
-};
+}
 
 export default App;
