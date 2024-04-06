@@ -2,18 +2,21 @@ import React, { useState, useEffect } from "react";
 import Table from "./components/Table";
 import Pagination from "./components/Pagination";
 import { MdFileDownload } from "react-icons/md";
+import Loader from "./components/Loader";
 
 function App() {
   const [data, setData] = useState([]);
   const [totalEntries, setTotalEntries] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false); // State variable to track fetching status
 
   useEffect(() => {
     fetchData();
   }, [currentPage, pageSize]);
 
   const fetchData = async () => {
+    setLoading(true); // Set loading to true when fetching starts
     try {
       const response = await fetch(
         `http://fe-test.dev.rampnow.io:8000/api/books?page=${currentPage}&limit=${pageSize}`
@@ -23,6 +26,8 @@ function App() {
       setTotalEntries(jsonData.count);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false); // Set loading to false when fetching ends
     }
   };
 
@@ -66,14 +71,20 @@ function App() {
           <MdFileDownload />
         </h1>
       </button>
-      <Table data={data} />
-      <Pagination
-        totalEntries={totalEntries}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-        onPageSizeChange={handlePageSizeChange}
-      />
+      {loading ? (
+        <Loader /> // Render the Loader component when data is being fetched
+      ) : (
+        <>
+          <Table data={data} />
+          <Pagination
+            totalEntries={totalEntries}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+            onPageSizeChange={handlePageSizeChange}
+          />
+        </>
+      )}
     </div>
   );
 }
