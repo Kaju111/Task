@@ -3,7 +3,7 @@ import React from "react";
 const Table = ({ data }) => {
   return (
     <div className="table-responsive rounded-lg border-2 sm:m-8 m-2 shadow-md p-5 flex justify-center items-center overflow-x-auto ">
-      <table className="table table-striped ">
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>ID</th>
@@ -18,7 +18,10 @@ const Table = ({ data }) => {
         </thead>
         <tbody>
           {data.map((item) => (
-            <tr key={item.id} className="border-gray-300 border-b-2 h-10">
+            <tr
+              key={item.id}
+              className="border-gray-300 border-b-2 h-16 even:bg-gray-100 odd:bg-white'"
+            >
               <td>{item.id}</td>
               <td>{item.title}</td>
               <td>{item.author}</td>
