@@ -21,7 +21,7 @@ const Pagination = ({
   };
 
   return (
-    <div className="pagination flex flex-row justify-between px-8 mb-6">
+    <div className="pagination flex flex-row gap-96 mt-3 px-8 mb-6">
       <span>
         Page Size:{" "}
         <select
