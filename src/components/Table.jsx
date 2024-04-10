@@ -68,7 +68,7 @@ const Table = ({
           </h1>
         </button>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-scroll max-h-[600px]">
         <table className="table table-striped">
           <thead>
             <tr>
