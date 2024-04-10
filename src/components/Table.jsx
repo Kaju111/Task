@@ -30,8 +30,8 @@ const Table = ({
   };
 
   return (
-    <div className="table-responsive h-svh   rounded-lg border-2 sm:m-8 m-2 shadow-md p-5 flex flex-col justify-center items-center  overflow-scroll ">
-      <div className=" flex flex-row items-center text-[10px] mb-10 ">
+    <div className="table-container rounded-lg border-2 sm:m-8 m-2 shadow-md p-5 flex flex-col justify-center items-center overflow-auto">
+      <div className="flex flex-row items-center text-[10px] mb-10 ">
         <h1 className="text-lg font-bold mr-8">Transactions</h1>
         <span className=" text-[10px] items-center text-sm border-gray-400 flex flex-row">
           <h1 className="border rounded-l-lg border-gray-400 p-1">1 DAY</h1>
@@ -68,41 +68,43 @@ const Table = ({
           </h1>
         </button>
       </div>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Country</th>
-            <th>Language</th>
-            <th>Link</th>
-            <th>Pages</th>
-            <th>Year</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item) => (
-            <tr
-              key={item.id}
-              className="border-gray-300 border-b-2 h-16 even:bg-gray-100 odd:bg-white'"
-            >
-              <td>{item.id}</td>
-              <td>{item.title}</td>
-              <td>{item.author}</td>
-              <td>{item.country}</td>
-              <td>{item.language}</td>
-              <td>
-                <a href={item.link} target="_blank" rel="noopener noreferrer">
-                  {item.title} Link
-                </a>
-              </td>
-              <td>{item.pages}</td>
-              <td>{item.year}</td>
+      <div className="overflow-x-auto">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Country</th>
+              <th>Language</th>
+              <th>Link</th>
+              <th>Pages</th>
+              <th>Year</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data.map((item) => (
+              <tr
+                key={item.id}
+                className="border-gray-300 border-b-2 h-16 even:bg-gray-100 odd:bg-white'"
+              >
+                <td>{item.id}</td>
+                <td>{item.title}</td>
+                <td>{item.author}</td>
+                <td>{item.country}</td>
+                <td>{item.language}</td>
+                <td>
+                  <a href={item.link} target="_blank" rel="noopener noreferrer">
+                    {item.title} Link
+                  </a>
+                </td>
+                <td>{item.pages}</td>
+                <td>{item.year}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <Pagination
         totalEntries={totalEntries}
         pageSize={pageSize}

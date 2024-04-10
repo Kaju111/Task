@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Table from "./components/Table";
-import Pagination from "./components/Pagination";
-import { MdFileDownload } from "react-icons/md";
 import Loader from "./components/Loader";
 import Sidebar from "./components/Sidebar";
 import Toggle from "./components/Toggle";
