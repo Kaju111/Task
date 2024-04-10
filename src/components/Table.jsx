@@ -53,14 +53,14 @@ const Table = ({
           />
           <IoSearch className="h-6 w-6" />
         </span>
-        <select className="w-[200px] p-2 mr-[200px] rounded-lg bg-white border border-gray-400">
+        <select className="w-[200px] p-2 mr-[40px] rounded-lg bg-white border border-gray-400">
           <option>staus</option>
           <option>option2</option>
           <option>option3</option>
         </select>
         <button
           onClick={handleDownloadCSV}
-          className="flex flex-row items-center ml-8 border-2 border-gray-300 py-2 px-2 rounded-xl hover:bg-gray-300"
+          className="flex flex-row items-center border-2 border-gray-300 py-2 px-2 rounded-xl hover:bg-gray-300"
         >
           Download CSV
           <h1>
