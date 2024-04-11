@@ -21,9 +21,9 @@ const Pagination = ({
   };
 
   return (
-    <div className="pagination flex flex-row gap-96 mt-3 px-8 mb-6">
-      <span>
-        Page Size:{" "}
+    <div className="pagination flex flex-col md:flex-row gap-2 md:gap-4 mt-3 px-8 mb-6">
+      <span className="flex items-center mb-2 md:mb-0">
+        <span className="mr-2">Page Size:</span>
         <select
           value={pageSize}
           onChange={handlePageSizeChange}
@@ -34,8 +34,8 @@ const Pagination = ({
           <option value={30}>30</option>
         </select>
       </span>
-      <span>
-        Page:
+      <span className="flex items-center">
+        <span className="mr-2">Page:</span>
         <button
           className="border-2 py-2 px-3 rounded-lg cursor-pointer border-gray-300"
           onClick={() => handlePageChange(currentPage - 1)}
